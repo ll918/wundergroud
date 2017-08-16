@@ -32,15 +32,19 @@ my_key = os.environ['WUNDERGROUND_KEY']
 settings = 'lang:FR/'
 location = os.environ['LOCATION']
 
-forecast = base_url + my_key + '/forecast/' + settings + 'q/' + location + '.json'
-conditions = base_url + my_key + '/conditions/' + settings + 'q/' + location + '.json'
 astronomy = base_url + my_key + '/astronomy/' + settings + 'q/' + location + '.json'
+conditions = base_url + my_key + '/conditions/' + settings + 'q/' + location + '.json'
+forecast = base_url + my_key + '/forecast/' + settings + 'q/' + location + '.json'
+
+everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + 'q/' + location + '.json'
 
 
 def print_astronomy():
     d = get_data(astronomy)
-    sunrise = d['sun_phase']['sunrise']['hour'] + ':' + d['sun_phase']['sunrise']['minute']
-    sunset = d['sun_phase']['sunset']['hour'] + ':' + d['sun_phase']['sunset']['minute']
+    sunrise = d['sun_phase']['sunrise']['hour'] + ':' + \
+              d['sun_phase']['sunrise']['minute']
+    sunset = d['sun_phase']['sunset']['hour'] + ':' + d['sun_phase']['sunset'][
+        'minute']
     phase = d['moon_phase']['phaseofMoon']
 
     print('Lever du soleil:', sunrise)
@@ -76,6 +80,7 @@ def print_conditions():
     observation_location = current['observation_location']['full']
     station_id = current['station_id']
 
+    # TODO: something with those
     precip_1hr_metric = current['precip_1hr_metric']
     precip_today_metric = current['precip_today_metric']
     visibility_km = current['visibility_km']
@@ -86,7 +91,7 @@ def print_conditions():
     print()
     print('Humidité:', r_humidity, '(' + feelslike_c, 'C' + ')')
     print('Pression:', pressure_mb, 'mb', trend)
-    print('Vents', win_dir, wind_kph, 'km/h',
+    print('Vents:', win_dir, wind_kph, 'km/h',
           'avec rafales', wind_gust_kph, 'km/h')
     print()
     print(observation_time)
@@ -94,6 +99,11 @@ def print_conditions():
     print(station_id)
     # pprint(current)
     return
+
+
+def print_forecast():
+    d = get_data(forecast)
+    pprint(d)
 
 
 def get_data(url):
@@ -106,3 +116,5 @@ def get_data(url):
 print_conditions()
 print()
 print_astronomy()
+print()
+print_forecast()
