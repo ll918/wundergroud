@@ -82,17 +82,17 @@ def print_conditions():
     windchill_c = current['windchill_c']
 
     print(city, local_time)
-    print(temp_c, 'C', '(' + feelslike_c, 'C' + ')',
-          weather)
+    print(temp_c, 'C', weather)
     print()
-    print('Humidité:', r_humidity)
+    print('Humidité:', r_humidity, '(' + feelslike_c, 'C' + ')')
+    print('Pression:', pressure_mb, 'mb', trend)
     print('Vents', win_dir, wind_kph, 'km/h',
           'avec rafales', wind_gust_kph, 'km/h')
-    print('Pression:', pressure_mb, 'mb', trend)
     print()
     print(observation_time)
     print(observation_location)
     print(station_id)
+    # pprint(current)
     return
 
 
