@@ -108,7 +108,8 @@ def print_conditions():
 
 def print_forecast():
     d = get_data(forecast)
-    pprint(d)
+    fc = d['forecast']['simpleforecast']['forecastday']
+    pprint(fc)
 
 
 def get_data(url):
