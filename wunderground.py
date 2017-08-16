@@ -1,26 +1,48 @@
+#!/usr/bin/env python3
+"""
+Retrieve weather with Python 3 script and wunderground.com API
+
+Api doc: https://www.wunderground.com/weather/api/d/docs?d=data/index&MR=1
+
+Request:
+GET http://api.wunderground.com/api/insert_api_key/features/settings/q/query.format
+
+Stratus plan features:
+* Geolookup: geolookup
+* Autocomplete: ?
+* Current conditions: conditions
+* 3-day forecast summary: forecast
+* Astronomy: astronomy
+* Almanac for today: almanac
+
+Settings:
+* lang:FR
+* pws:0 (no personal weather station)
+
+Notes:
+* Pressure: sea level standard is about 1,013 millibars.
+"""
 import json
 import os
 import urllib.request
 from pprint import pprint
 
+base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
+settings = 'lang:FR/'
 location = os.environ['LOCATION']
 
-base_url = 'http://api.wunderground.com/api/'
-url1 = base_url + my_key + '/forecast/lang:FR/q/' + location + '.json'
-url2 = base_url + my_key + '/conditions/lang:FR/q/' + location + '.json'
-url3 = base_url + my_key + '/astronomy/lang:FR/q/' + location + '.json'
+forecast = base_url + my_key + '/forecast/' + settings + 'q/' + location + '.json'
+conditions = base_url + my_key + '/conditions/' + settings + 'q/' + location + '.json'
+astronomy = base_url + my_key + '/astronomy/' + settings + 'q/' + location + '.json'
 
 
 def print_astronomy():
-    d = get_data(url3)
-    sunrise = d['sun_phase']['sunrise']['hour'] + ':' + \
-              d['sun_phase']['sunrise']['minute']
-    sunset = d['sun_phase']['sunset']['hour'] + ':' + d['sun_phase']['sunset'][
-        'minute']
+    d = get_data(astronomy)
+    sunrise = d['sun_phase']['sunrise']['hour'] + ':' + d['sun_phase']['sunrise']['minute']
+    sunset = d['sun_phase']['sunset']['hour'] + ':' + d['sun_phase']['sunset']['minute']
     phase = d['moon_phase']['phaseofMoon']
 
-    print()
     print('Lever du soleil:', sunrise)
     print('Coucher du soleil:', sunset)
     print('Phase de la lune:', phase)
@@ -28,31 +50,41 @@ def print_astronomy():
 
 
 def print_conditions():
-    d = get_data(url2)
+    d = get_data(conditions)
     current = d['current_observation']
 
-    print(current['display_location']['city'], current['local_time_rfc822'])
-    print(current['temp_c'], 'C', '(' + current['feelslike_c'], 'C' + ')',
-          current['weather'])
-    print()
-    print('Humidité:', current['relative_humidity'])
-    print('Vents du', current['wind_dir'], current['wind_kph'], 'km/h',
-          'avec rafales:', current['wind_gust_kph'], 'km/h')
-    print('Pression:', current['pressure_mb'], 'mb', current['pressure_trend'])
-    print()
-    print(current['observation_time'])
-    print(current['observation_location']['full'])
-    print(current['station_id'])
-    # print()
-    # print('---')
-    # print(current['precip_1hr_metric'])
-    # print(current['precip_today_metric'])
-    # print(current['pressure_trend'])
-    # print(current['visibility_km'])
-    # print()
-    # print('Facteur vent:', current['windchill_c'])
+    city = current['display_location']['city']
+    local_time = current['local_time_rfc822']
+    temp_c = current['temp_c']
+    feelslike_c = current['feelslike_c']
+    weather = current['weather']
+    r_humidity = current['relative_humidity']
+    win_dir = current['wind_dir']
+    wind_kph = current['wind_kph']
+    wind_gust_kph = current['wind_gust_kph']
+    pressure_mb = current['pressure_mb']
+    pressure_trend = current['pressure_trend']  # rising, falling, steady
+    observation_time = current['observation_time']
+    observation_location = current['observation_location']['full']
+    station_id = current['station_id']
 
-    # pprint(current)
+    precip_1hr_metric = current['precip_1hr_metric']
+    precip_today_metric = current['precip_today_metric']
+    visibility_km = current['visibility_km']
+    windchill_c = current['windchill_c']
+
+    print(city, local_time)
+    print(temp_c, 'C', '(' + feelslike_c, 'C' + ')',
+          weather)
+    print()
+    print('Humidité:', r_humidity)
+    print('Vents du', win_dir, wind_kph, 'km/h',
+          'avec rafales', wind_gust_kph, 'km/h')
+    print('Pression:', pressure_mb, 'mb', pressure_trend)
+    print()
+    print(observation_time)
+    print(observation_location)
+    print(station_id)
     return
 
 
@@ -64,4 +96,5 @@ def get_data(url):
 
 
 print_conditions()
+print()
 print_astronomy()
