@@ -63,7 +63,15 @@ def print_conditions():
     wind_kph = current['wind_kph']
     wind_gust_kph = current['wind_gust_kph']
     pressure_mb = current['pressure_mb']
+
     pressure_trend = current['pressure_trend']  # rising, falling, steady
+    if pressure_trend == '-':
+        trend = 'falling'
+    elif pressure_trend == '+':
+        trend = 'rising'
+    else:
+        trend = 'steady'
+
     observation_time = current['observation_time']
     observation_location = current['observation_location']['full']
     station_id = current['station_id']
@@ -78,9 +86,9 @@ def print_conditions():
           weather)
     print()
     print('Humidité:', r_humidity)
-    print('Vents du', win_dir, wind_kph, 'km/h',
+    print('Vents', win_dir, wind_kph, 'km/h',
           'avec rafales', wind_gust_kph, 'km/h')
-    print('Pression:', pressure_mb, 'mb', pressure_trend)
+    print('Pression:', pressure_mb, 'mb', trend)
     print()
     print(observation_time)
     print(observation_location)
