@@ -111,16 +111,21 @@ def print_conditions():
     heat_index_c = current['heat_index_c']
 
     print(city, time.strftime('%H:%M', time.localtime()))
-    print(temp_c, 'C', weather)
+    print(temp_c, 'C')
+    print(weather)
     print()
     print('Humidité:', r_humidity, '(' + feelslike_c, 'C' + ')')
     print('Pression:', pressure_mb, 'mb', trend)
     print('Vents:', win_dir, wind_kph, 'km/h',
           'avec rafales', wind_gust_kph, 'km/h')
-    print(forecast_url)
+    print()
+    print_astronomy()
+    print()
+    print_txt_forecast()
     print()
     print(observation_time)
     print(observation_location, '(' + station_id + ')')
+    print(forecast_url)
     return
 
 
@@ -172,9 +177,10 @@ def print_txt_forecast():
 
     d = get_data(forecast)
     fc = d['forecast']['txt_forecast']['forecastday']
+    # print(time.ctime())
+    # print()
     for i in fc:
         print(i['title'].capitalize() + ':', i['fcttext_metric'])
-        print()
 
 
 print_conditions()
@@ -182,5 +188,5 @@ print_conditions()
 # print_astronomy()
 # print()
 # print_forecast()
-print()
+# print()
 # print_txt_forecast()
