@@ -113,10 +113,7 @@ def print_forecast():
     fc = d['forecast']['simpleforecast']['forecastday']
     print('Prévisions 3 prochains jours:')
     for i in fc:
-        avehumidity = i['avehumidity']
-        avewind_dir = i['avewind']['dir']
-        avewind_kph = i['avewind']['kph']
-        conditions = i['conditions']
+        period = i['period']
         day = i['date']['day']
         epoch = i['date']['epoch']
         hour = i['date']['hour']
@@ -126,12 +123,13 @@ def print_forecast():
         date_pretty = i['date']['pretty']
         weekday = i['date']['weekday']
         year = i['date']['year']
+
+        avehumidity = i['avehumidity']
+        avewind_dir = i['avewind']['dir']
+        avewind_kph = i['avewind']['kph']
+        conditions = i['conditions']
         high = i['high']['celsius']
         low = i['low']['celsius']
-        maxwind_dir = i['maxwind']['dir']
-        maxwind_kph = i['maxwind']['kph']
-        period = i['period']
-
         pop = i['pop']  # prob of precipitations
         qpf_allday = i['qpf_allday']['mm']  # rain
         snow_allday = i['snow_allday']['cm']
@@ -139,16 +137,19 @@ def print_forecast():
         if period == 1:
             print("Aujourd'hui", weekday, day, monthname, year)
         else:
-            print(weekday, day, monthname, year)
+            print(weekday.capitalize(), day, monthname, year)
+
         print(high, '/', low, 'celsius')
         print(conditions)
         print('Humidité:', avehumidity, '%')
         print('Vent:', avewind_dir, avewind_kph, 'km/h')
-        print('Précipitation:', pop, '%')
-        if qpf_allday > 0:
-            print(qpf_allday, 'mm', 'de pluie')
-        if snow_allday > 0:
-            print(snow_allday, 'cm', 'de neige')
+
+        if pop > 0:
+            print('Précipitation:', pop, '%')
+            if qpf_allday > 0:
+                print(qpf_allday, 'mm', 'de pluie')
+            if snow_allday > 0:
+                print(snow_allday, 'cm', 'de neige')
         print()
 
 
