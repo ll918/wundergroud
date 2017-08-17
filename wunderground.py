@@ -26,6 +26,7 @@ Notes:
 import json
 import os
 import urllib.request
+import time
 
 base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
@@ -73,6 +74,7 @@ def print_conditions():
 
     city = current['display_location']['city']
     local_time = current['local_time_rfc822']  # personalize
+    local_epoch = current['local_epoch']
     temp_c = current['temp_c']
     feelslike_c = current['feelslike_c']
     weather = current['weather']
@@ -94,27 +96,28 @@ def print_conditions():
         trend = 'stable'
 
     observation_time = current['observation_time']
+    observation_epoch = current['observation_epoch']
     observation_location = current['observation_location']['full']
     station_id = current['station_id']
+    forecast_url = current['forecast_url']
 
     # TODO: something with those
     observation_epoch = current['observation_epoch']  # which epoch?
-    local_epoch = current['local_epoch']
     dewpoint_c = current['dewpoint_c']
     precip_1hr_metric = current['precip_1hr_metric']
     precip_today_metric = current['precip_today_metric']
     visibility_km = current['visibility_km']
     windchill_c = current['windchill_c']
     heat_index_c = current['heat_index_c']
-    forecast_url = current['forecast_url']
 
-    print(city, local_time)
+    print(city, time.strftime('%H:%M', time.localtime()))
     print(temp_c, 'C', weather)
     print()
     print('Humidité:', r_humidity, '(' + feelslike_c, 'C' + ')')
     print('Pression:', pressure_mb, 'mb', trend)
     print('Vents:', win_dir, wind_kph, 'km/h',
           'avec rafales', wind_gust_kph, 'km/h')
+    print(forecast_url)
     print()
     print(observation_time)
     print(observation_location, '(' + station_id + ')')
@@ -180,4 +183,4 @@ print_conditions()
 # print()
 # print_forecast()
 print()
-print_txt_forecast()
+# print_txt_forecast()
