@@ -40,6 +40,15 @@ forecast = base_url + my_key + '/forecast/' + settings + '/q/' + location + '.js
 everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + 'q/' + location + '.json'
 
 
+def get_data(url):
+    # Takes a url and return json data as a dict
+
+    with urllib.request.urlopen(url) as response:
+        r = response.read()
+        data = json.loads(r.decode('utf-8'))
+    return data
+
+
 def print_astronomy():
     # print astronomy data
 
@@ -73,13 +82,16 @@ def print_conditions():
     wind_gust_kph = current['wind_gust_kph']
     pressure_mb = current['pressure_mb']
 
-    pressure_trend = current['pressure_trend']  # rising, falling, steady
+    pressure_trend = current['pressure_trend']
     if pressure_trend == '-':
-        trend = 'falling'
+        # falling
+        trend = 'baisse'
     elif pressure_trend == '+':
-        trend = 'rising'
+        # rising
+        trend = 'hausse'
     else:
-        trend = 'steady'
+        # steady
+        trend = 'stable'
 
     observation_time = current['observation_time']
     observation_location = current['observation_location']['full']
@@ -153,17 +165,8 @@ def print_forecast():
         print()
 
 
-def get_data(url):
-    # Takes a url and return json data as a dict
-
-    with urllib.request.urlopen(url) as response:
-        r = response.read()
-        data = json.loads(r.decode('utf-8'))
-    return data
-
-
 print_conditions()
-print()
-print_astronomy()
-print()
-print_forecast()
+# print()
+# print_astronomy()
+# print()
+# print_forecast()
