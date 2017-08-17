@@ -72,7 +72,7 @@ def print_conditions():
     current = d['current_observation']
 
     city = current['display_location']['city']
-    local_time = current['local_time_rfc822']
+    local_time = current['local_time_rfc822']  # personalize
     temp_c = current['temp_c']
     feelslike_c = current['feelslike_c']
     weather = current['weather']
@@ -85,10 +85,10 @@ def print_conditions():
     pressure_trend = current['pressure_trend']
     if pressure_trend == '-':
         # falling
-        trend = 'baisse'
+        trend = 'en baisse'
     elif pressure_trend == '+':
         # rising
-        trend = 'hausse'
+        trend = 'à la hausse'
     else:
         # steady
         trend = 'stable'
@@ -165,7 +165,7 @@ def print_forecast():
 
 
 print_conditions()
-print()
-print_astronomy()
-print()
-print_forecast()
+# print()
+# print_astronomy()
+# print()
+# print_forecast()
