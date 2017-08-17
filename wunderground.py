@@ -164,8 +164,20 @@ def print_forecast():
         print()
 
 
+def print_txt_forecast():
+    # print one line per period forecast
+
+    d = get_data(forecast)
+    fc = d['forecast']['txt_forecast']['forecastday']
+    for i in fc:
+        print(i['title'].capitalize() + ':', i['fcttext_metric'])
+        print()
+
+
 print_conditions()
 # print()
 # print_astronomy()
 # print()
 # print_forecast()
+print()
+print_txt_forecast()
