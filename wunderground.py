@@ -20,6 +20,7 @@ Settings:
 * pws:0 (no personal weather station)
 
 Notes:
+* Key and location stored in environment variables.
 * Pressure: sea level standard is about 1,013 millibars.
 """
 import json
