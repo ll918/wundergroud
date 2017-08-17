@@ -41,7 +41,7 @@ everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + 
 
 
 def get_data(url):
-    # Takes a url and return json data as a dict
+    # Takes a url and return json data
 
     with urllib.request.urlopen(url) as response:
         r = response.read()
@@ -118,8 +118,6 @@ def print_conditions():
     print()
     print(observation_time)
     print(observation_location, '(' + station_id + ')')
-
-    # pprint(current)
     return
 
 
@@ -129,6 +127,7 @@ def print_forecast():
     d = get_data(forecast)
     fc = d['forecast']['simpleforecast']['forecastday']
     print('Prévisions 3 prochains jours:')
+    print()
     for i in fc:
         period = i['period']
         day = i['date']['day']
@@ -166,7 +165,7 @@ def print_forecast():
 
 
 print_conditions()
-# print()
-# print_astronomy()
-# print()
-# print_forecast()
+print()
+print_astronomy()
+print()
+print_forecast()
