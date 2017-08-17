@@ -107,9 +107,46 @@ def print_conditions():
 
 
 def print_forecast():
+    # 3 days forecast
+
     d = get_data(forecast)
     fc = d['forecast']['simpleforecast']['forecastday']
-    pprint(fc)
+    print('Prévisions')
+    for i in fc:
+        avehumidity = i['avehumidity']
+        avewind_dir = i['avewind']['dir']
+        avewind_kph = i['avewind']['kph']
+        conditions = i['conditions']
+        day = i['date']['day']
+        epoch = i['date']['epoch']
+        hour = i['date']['hour']
+        min = i['date']['min']
+        month = i['date']['month']
+        monthname = i['date']['monthname']
+        date_pretty = i['date']['pretty']
+        weekday = i['date']['weekday']
+        year = i['date']['year']
+        high = i['high']['celsius']
+        low = i['low']['celsius']
+        maxwind_dir = i['maxwind']['dir']
+        maxwind_kph = i['maxwind']['kph']
+        period = i['period']
+
+        pop = i['pop']  # prob of precipitations
+        qpf_allday = i['qpf_allday']['mm']  # rain
+        snow_allday = i['snow_allday']['cm']
+
+        print(weekday, day, monthname, year)
+        print(high, '/', low, 'celsius')
+        print(conditions)
+        print('Humidité:', avehumidity, '%')
+        print('Vent:', avewind_dir, avewind_kph, 'km/h')
+        print('Précipitation:', pop, '%')
+        if qpf_allday > 0:
+            print(qpf_allday, 'mm', 'de pluie')
+        if snow_allday > 0:
+            print(snow_allday, 'cm', 'de neige')
+        print()
 
 
 def get_data(url):
