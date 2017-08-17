@@ -111,7 +111,7 @@ def print_forecast():
 
     d = get_data(forecast)
     fc = d['forecast']['simpleforecast']['forecastday']
-    print('Prévisions')
+    print('Prévisions 3 prochains jours:')
     for i in fc:
         avehumidity = i['avehumidity']
         avewind_dir = i['avewind']['dir']
@@ -136,7 +136,10 @@ def print_forecast():
         qpf_allday = i['qpf_allday']['mm']  # rain
         snow_allday = i['snow_allday']['cm']
 
-        print(weekday, day, monthname, year)
+        if period == 1:
+            print("Aujourd'hui", weekday, day, monthname, year)
+        else:
+            print(weekday, day, monthname, year)
         print(high, '/', low, 'celsius')
         print(conditions)
         print('Humidité:', avehumidity, '%')
