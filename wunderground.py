@@ -158,62 +158,10 @@ def print_forecast():
 
 
 def print_report():
-    # print current conditions
-
-    d = get_data(conditions)
-    current = d['current_observation']
-
-    city = current['display_location']['city']
-    temp_c = current['temp_c']
-    feelslike_c = current['feelslike_c']
-    weather = current['weather']
-    r_humidity = current['relative_humidity']
-    win_dir = current['wind_dir']
-    wind_kph = current['wind_kph']
-    wind_gust_kph = current['wind_gust_kph']
-    pressure_mb = current['pressure_mb']
-
-    pressure_trend = current['pressure_trend']
-    if pressure_trend == '-':
-        # falling
-        trend = 'en baisse'
-    elif pressure_trend == '+':
-        # rising
-        trend = 'à la hausse'
-    else:
-        # steady
-        trend = 'stable'
-
-    observation_time = current['observation_time']
-    observation_location = current['observation_location']['full']
-    station_id = current['station_id']
-    forecast_url = current['forecast_url']
-
-    # TODO: something with those
-    observation_epoch = current['observation_epoch']  # which epoch?
-    dewpoint_c = current['dewpoint_c']
-    precip_1hr_metric = current['precip_1hr_metric']
-    precip_today_metric = current['precip_today_metric']
-    visibility_km = current['visibility_km']
-    windchill_c = current['windchill_c']
-    heat_index_c = current['heat_index_c']
-
-    print(city, time.strftime('%H:%M', time.localtime()))
-    print(temp_c, 'C')
-    print(weather)
+    # print current conditions and detailed 3 days forecast
+    print_conditions()
     print()
-    print('Humidité:', r_humidity, '(' + feelslike_c, 'C' + ')')
-    print('Pression:', pressure_mb, 'mb', trend)
-    print('Vents:', win_dir, wind_kph, 'km/h',
-          'avec rafales', wind_gust_kph, 'km/h')
-    print()
-    print_astronomy()
-    print()
-    print_txt_forecast()
-    print()
-    print(observation_time)
-    print(observation_location, '(' + station_id + ')')
-    print(forecast_url)
+    print_forecast()
     return
 
 
@@ -226,6 +174,14 @@ def print_txt_forecast():
     # print()
     for i in fc:
         print(i['title'].capitalize() + ':', i['fcttext_metric'])
+
+
+def print_txt_report():
+    # print current conditions and txt forecast
+    print_conditions()
+    print()
+    print_txt_forecast()
+    return
 
 
 print_report()
