@@ -35,6 +35,7 @@ astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' + location + '.
 conditions = base_url + my_key + '/conditions/' + settings + '/q/' + location + '.json'
 forecast = base_url + my_key + '/forecast/' + settings + '/q/' + location + '.json'
 
+# TODO: use 1 combined request when printing everything at same time
 everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + 'q/' + location + '.json'
 
 
