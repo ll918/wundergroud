@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Retrieve weather with Python 3 script and wunderground.com API
+Personal weather report with Python 3 script and wunderground.com API
 
 Api doc: https://www.wunderground.com/weather/api/d/docs?d=data/index&MR=1
 
@@ -25,7 +25,6 @@ Notes:
 import json
 import os
 import urllib.request
-from pprint import pprint
 
 base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
@@ -40,6 +39,8 @@ everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + 
 
 
 def print_astronomy():
+    # print astronomy data
+
     d = get_data(astronomy)
     sunrise = d['sun_phase']['sunrise']['hour'] + ':' + \
               d['sun_phase']['sunrise']['minute']
@@ -54,6 +55,8 @@ def print_astronomy():
 
 
 def print_conditions():
+    # print current conditions
+
     d = get_data(conditions)
     current = d['current_observation']
 
@@ -107,7 +110,7 @@ def print_conditions():
 
 
 def print_forecast():
-    # 3 days forecast
+    # print 3 days forecast
 
     d = get_data(forecast)
     fc = d['forecast']['simpleforecast']['forecastday']
@@ -115,12 +118,7 @@ def print_forecast():
     for i in fc:
         period = i['period']
         day = i['date']['day']
-        epoch = i['date']['epoch']
-        hour = i['date']['hour']
-        min = i['date']['min']
-        month = i['date']['month']
         monthname = i['date']['monthname']
-        date_pretty = i['date']['pretty']
         weekday = i['date']['weekday']
         year = i['date']['year']
 
@@ -154,6 +152,8 @@ def print_forecast():
 
 
 def get_data(url):
+    # Takes a url and return json data as a dict
+
     with urllib.request.urlopen(url) as response:
         r = response.read()
         data = json.loads(r.decode('utf-8'))
