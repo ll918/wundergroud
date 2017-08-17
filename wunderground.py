@@ -28,12 +28,12 @@ import urllib.request
 
 base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
-settings = 'lang:FR/'
+settings = 'lang:FR'
 location = os.environ['LOCATION']  # Example 'Australia/Sydney'
 
-astronomy = base_url + my_key + '/astronomy/' + settings + 'q/' + location + '.json'
-conditions = base_url + my_key + '/conditions/' + settings + 'q/' + location + '.json'
-forecast = base_url + my_key + '/forecast/' + settings + 'q/' + location + '.json'
+astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' + location + '.json'
+conditions = base_url + my_key + '/conditions/' + settings + '/q/' + location + '.json'
+forecast = base_url + my_key + '/forecast/' + settings + '/q/' + location + '.json'
 
 everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + 'q/' + location + '.json'
 
