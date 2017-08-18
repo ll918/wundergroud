@@ -22,7 +22,6 @@ Settings:
 
 Notes:
 * Key and location stored in environment variables.
-* Airport codes do not work with this code.
 * Pressure: sea level standard is about 1,013 millibars.
 """
 import json
@@ -33,7 +32,7 @@ import urllib.request
 base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
 
-# Location example 'Australia/Sydney', pws:KCASANFR70
+# Location example 'Australia/Sydney', pws:KCASANFR70, KJFK (aircodes)
 location = os.environ['LOCATION']
 settings = 'lang:FR'
 
@@ -57,17 +56,18 @@ def get_data(url):
     return data
 
 
-def print_astronomy(d):
+def print_astronomy(data):
     # print astronomy data
 
-    if not d:
-        d = get_data(astronomy)
+    if not data:
+        data = get_data(astronomy)
 
-    sunrise = d['sun_phase']['sunrise']['hour'] + ':' + \
-              d['sun_phase']['sunrise']['minute']
-    sunset = d['sun_phase']['sunset']['hour'] + ':' + d['sun_phase']['sunset'][
-        'minute']
-    phase = d['moon_phase']['phaseofMoon']
+    sunrise = data['sun_phase']['sunrise']['hour'] + ':' + \
+              data['sun_phase']['sunrise']['minute']
+    sunset = data['sun_phase']['sunset']['hour'] + ':' + \
+             data['sun_phase']['sunset'][
+                 'minute']
+    phase = data['moon_phase']['phaseofMoon']
 
     print('Lever du soleil:', sunrise)
     print('Coucher du soleil:', sunset)
@@ -75,13 +75,13 @@ def print_astronomy(d):
     return
 
 
-def print_conditions(d):
+def print_conditions(data):
     # print current conditions
 
-    if not d:
-        d = get_data(conditions)
+    if not data:
+        data = get_data(conditions)
 
-    current = d['current_observation']
+    current = data['current_observation']
 
     city = current['display_location']['city']
     temp_c = current['temp_c']
@@ -124,12 +124,12 @@ def print_conditions(d):
     return
 
 
-def print_forecast(d):
+def print_forecast(data):
     # print 3 days forecast
 
-    if not d:
-        d = get_data(forecast)
-    fc = d['forecast']['simpleforecast']['forecastday']
+    if not data:
+        data = get_data(forecast)
+    fc = data['forecast']['simpleforecast']['forecastday']
     print('Prévisions 3 prochains jours:')
     print()
     for i in fc:
@@ -181,12 +181,12 @@ def print_report():
     return
 
 
-def print_txt_forecast(d):
+def print_txt_forecast(data):
     # print one line per period forecast
 
-    if not d:
-        d = get_data(forecast)
-    fc = d['forecast']['txt_forecast']['forecastday']
+    if not data:
+        data = get_data(forecast)
+    fc = data['forecast']['txt_forecast']['forecastday']
 
     for i in fc:
         print(i['title'].capitalize() + ':', i['fcttext_metric'])
@@ -205,4 +205,4 @@ def print_txt_report():
     return
 
 
-print_txt_report()
+print_report()
