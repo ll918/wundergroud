@@ -6,7 +6,7 @@ Api doc:
 https://www.wunderground.com/weather/api/d/docs?d=data/index&MR=1
 
 Request:
-GET http://api.wunderground.com/api/insert_api_key/features/settings/q/query.format
+http://api.wunderground.com/api/insert_api_key/features/settings/q/query.format
 
 Stratus plan features:
 * Geolookup: geolookup
