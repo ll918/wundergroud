@@ -25,14 +25,15 @@ Notes:
 """
 import json
 import os
-import urllib.request
 import time
+import urllib.request
 
 base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
-settings = 'lang:FR'
+
 # Location example 'Australia/Sydney', pws:KCASANFR70, kjfk (airport)
 location = os.environ['LOCATION']
+settings = 'lang:FR'
 
 astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' + location + '.json'
 conditions = base_url + my_key + '/conditions/' + settings + '/q/' + location + '.json'
