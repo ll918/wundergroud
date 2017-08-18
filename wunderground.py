@@ -36,11 +36,15 @@ my_key = os.environ['WUNDERGROUND_KEY']
 location = os.environ['LOCATION']
 settings = 'lang:FR'
 
-astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' + location + '.json'
-conditions = base_url + my_key + '/conditions/' + settings + '/q/' + location + '.json'
-forecast = base_url + my_key + '/forecast/' + settings + '/q/' + location + '.json'
+astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' \
+            + location + '.json'
+conditions = base_url + my_key + '/conditions/' + settings + '/q/' \
+             + location + '.json'
+forecast = base_url + my_key + '/forecast/' + settings + '/q/' \
+           + location + '.json'
 
-everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + '/q/' + location + '.json'
+everything = base_url + my_key + '/astronomy/conditions/forecast/' \
+             + settings + '/q/' + location + '.json'
 
 
 def get_data(url):
