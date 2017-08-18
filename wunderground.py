@@ -38,7 +38,6 @@ astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' + location + '.
 conditions = base_url + my_key + '/conditions/' + settings + '/q/' + location + '.json'
 forecast = base_url + my_key + '/forecast/' + settings + '/q/' + location + '.json'
 
-# TODO: use 1 combined request when printing everything at same time
 everything = base_url + my_key + '/astronomy/conditions/forecast/' + settings + '/q/' + location + '.json'
 
 
@@ -51,10 +50,12 @@ def get_data(url):
     return data
 
 
-def print_astronomy():
+def print_astronomy(d):
     # print astronomy data
 
-    d = get_data(astronomy)
+    if not d:
+        d = get_data(astronomy)
+
     sunrise = d['sun_phase']['sunrise']['hour'] + ':' + \
               d['sun_phase']['sunrise']['minute']
     sunset = d['sun_phase']['sunset']['hour'] + ':' + d['sun_phase']['sunset'][
@@ -67,10 +68,12 @@ def print_astronomy():
     return
 
 
-def print_conditions():
+def print_conditions(d):
     # print current conditions
 
-    d = get_data(conditions)
+    if not d:
+        d = get_data(conditions)
+
     current = d['current_observation']
 
     city = current['display_location']['city']
@@ -114,10 +117,11 @@ def print_conditions():
     return
 
 
-def print_forecast():
+def print_forecast(d):
     # print 3 days forecast
 
-    d = get_data(forecast)
+    if not d:
+        d = get_data(forecast)
     fc = d['forecast']['simpleforecast']['forecastday']
     print('Prévisions 3 prochains jours:')
     print()
@@ -159,28 +163,38 @@ def print_forecast():
 
 def print_report():
     # print current conditions and detailed 3 days forecast
-    print_conditions()
+
+    d = get_data(everything)
+
+    print_conditions(d)
     print()
-    print_forecast()
+    print_astronomy(d)
+    print()
+    print_forecast(d)
     return
 
 
-def print_txt_forecast():
+def print_txt_forecast(d):
     # print one line per period forecast
 
-    d = get_data(forecast)
+    if not d:
+        d = get_data(forecast)
     fc = d['forecast']['txt_forecast']['forecastday']
-    # print(time.ctime())
-    # print()
+
     for i in fc:
         print(i['title'].capitalize() + ':', i['fcttext_metric'])
 
 
 def print_txt_report():
     # print current conditions and txt forecast
-    print_conditions()
+
+    d = get_data(everything)
+
+    print_conditions(d)
     print()
-    print_txt_forecast()
+    print_txt_forecast(d)
+    print()
+    print_astronomy(d)
     return
 
 
