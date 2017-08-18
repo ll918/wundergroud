@@ -22,6 +22,7 @@ Settings:
 
 Notes:
 * Key and location stored in environment variables.
+* Airport codes do not work with this code.
 * Pressure: sea level standard is about 1,013 millibars.
 """
 import json
@@ -32,7 +33,7 @@ import urllib.request
 base_url = 'http://api.wunderground.com/api/'
 my_key = os.environ['WUNDERGROUND_KEY']
 
-# Location example 'Australia/Sydney', pws:KCASANFR70, kjfk (airport)
+# Location example 'Australia/Sydney', pws:KCASANFR70
 location = os.environ['LOCATION']
 settings = 'lang:FR'
 
