@@ -164,13 +164,13 @@ def print_forecast(d):
 def print_report():
     # print current conditions and detailed 3 days forecast
 
-    d = get_data(everything)
+    weather_data = get_data(everything)
 
-    print_conditions(d)
+    print_conditions(weather_data)
     print()
-    print_astronomy(d)
+    print_forecast(weather_data)
     print()
-    print_forecast(d)
+    print_astronomy(weather_data)
     return
 
 
@@ -188,14 +188,14 @@ def print_txt_forecast(d):
 def print_txt_report():
     # print current conditions and txt forecast
 
-    d = get_data(everything)
+    weather_data = get_data(everything)
 
-    print_conditions(d)
+    print_conditions(weather_data)
     print()
-    print_txt_forecast(d)
+    print_txt_forecast(weather_data)
     print()
-    print_astronomy(d)
+    print_astronomy(weather_data)
     return
 
 
-print_report()
+print_txt_report()
