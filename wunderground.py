@@ -142,7 +142,7 @@ def print_forecast(data):
     if not data:
         data = get_data(forecast)
     fc = data['forecast']['simpleforecast']['forecastday']
-    print('Prévisions 3 prochains jours:')
+    print("Prévisions pour aujourd'hui et les 3 prochains jours:")
     print()
     for i in fc:
         period = i['period']
@@ -217,4 +217,4 @@ def print_txt_report():
     return
 
 
-print_txt_report()
+print_report()
