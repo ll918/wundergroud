@@ -86,7 +86,10 @@ def print_conditions(data):
 
     city = current['display_location']['city']
     temp_c = current['temp_c']
+
+    # What it feels like. heat index or windchill
     feelslike_c = current['feelslike_c']
+
     weather = current['weather']
     r_humidity = current['relative_humidity']
     win_dir = current['wind_dir']
@@ -115,10 +118,14 @@ def print_conditions(data):
     forecast_url = current['forecast_url']
 
     print(city, time.strftime('%H:%M', time.localtime()))
-    print(temp_c, 'C')
+    if temp_c == int(feelslike_c):
+        print(temp_c, 'C')
+    else:
+        print(temp_c, 'C', '(' + feelslike_c, 'C' + ')')
+
     print(weather)
     print()
-    print('Humidité:', r_humidity, '(' + feelslike_c, 'C' + ')')
+    print('Humidité:', r_humidity)
     print('Pression:', pressure_mb, 'mb', trend)
     print('Vents:', win_dir, wind_kph, 'km/h',
           'avec rafales', wind_gust_kph, 'km/h')
