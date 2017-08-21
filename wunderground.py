@@ -34,6 +34,7 @@ my_key = os.environ['WUNDERGROUND_KEY']
 
 # Location example 'Australia/Sydney', pws:KCASANFR70, KJFK (aircodes)
 location = os.environ['LOCATION']
+
 settings = 'lang:FR'
 
 astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' \
@@ -91,7 +92,11 @@ def print_conditions(data):
     win_dir = current['wind_dir']
     wind_kph = current['wind_kph']
     wind_gust_kph = current['wind_gust_kph']
+
+    # some stations return pressure with '-' before the measure. (-9987)
     pressure_mb = current['pressure_mb']
+    if pressure_mb.startswith('-'):
+        pressure_mb = pressure_mb.lstrip('-')
 
     pressure_trend = current['pressure_trend']
     if pressure_trend == '-':
@@ -205,4 +210,4 @@ def print_txt_report():
     return
 
 
-print_report()
+print_txt_report()
