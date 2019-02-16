@@ -2,6 +2,7 @@
 """
 Personal weather report with Python 3 script and wunderground.com API
 
+
 Api doc:
 https://www.wunderground.com/weather/api/d/docs?d=data/index&MR=1
 
