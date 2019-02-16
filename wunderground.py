@@ -2,7 +2,6 @@
 """
 Personal weather report with Python 3 script and wunderground.com API
 
-
 Api doc:
 https://www.wunderground.com/weather/api/d/docs?d=data/index&MR=1
 
@@ -38,15 +37,15 @@ location = os.environ['LOCATION']
 
 settings = 'lang:FR'
 
-astronomy = base_url + my_key + '/astronomy/' + settings + '/q/' \
-            + location + '.json'
-conditions = base_url + my_key + '/conditions/' + settings + '/q/' \
-             + location + '.json'
-forecast = base_url + my_key + '/forecast/' + settings + '/q/' \
-           + location + '.json'
-
-everything = base_url + my_key + '/astronomy/conditions/forecast/' \
-             + settings + '/q/' + location + '.json'
+astronomy = "".join(
+    [base_url, my_key, '/astronomy/', settings, '/q/', location, '.json'])
+conditions = "".join(
+    [base_url, my_key, '/conditions/', settings, '/q/', location, '.json'])
+forecast = "".join(
+    [base_url, my_key, '/forecast/', settings, '/q/', location, '.json'])
+everything = "".join(
+    [base_url, my_key, '/astronomy/conditions/forecast/', settings, '/q/',
+     location, '.json'])
 
 
 def get_data(url):
@@ -64,11 +63,10 @@ def print_astronomy(data):
     if not data:
         data = get_data(astronomy)
 
-    sunrise = data['sun_phase']['sunrise']['hour'] + ':' + \
-              data['sun_phase']['sunrise']['minute']
-    sunset = data['sun_phase']['sunset']['hour'] + ':' + \
-             data['sun_phase']['sunset'][
-                 'minute']
+    sunrise = ":".join([data['sun_phase']['sunrise']['hour'],
+                        data['sun_phase']['sunrise']['minute']])
+    sunset = ":".join([data['sun_phase']['sunset']['hour'],
+                       data['sun_phase']['sunset']['minute']])
     phase = data['moon_phase']['phaseofMoon']
 
     print('Lever du soleil:', sunrise)
@@ -98,9 +96,7 @@ def print_conditions(data):
     wind_gust_kph = current['wind_gust_kph']
 
     # some stations return pressure with '-' before the measure. (-9987)
-    pressure_mb = current['pressure_mb']
-    if pressure_mb.startswith('-'):
-        pressure_mb = pressure_mb.lstrip('-')
+    pressure_mb = current['pressure_mb'].lstrip('-')
 
     pressure_trend = current['pressure_trend']
     if pressure_trend == '-':
@@ -122,7 +118,7 @@ def print_conditions(data):
     if temp_c == int(feelslike_c):
         print(temp_c, 'C')
     else:
-        print(temp_c, 'C', '(' + feelslike_c, 'C' + ')')
+        print(temp_c, 'C', '(', feelslike_c, 'C', ')')
 
     print(weather)
     print()
@@ -132,7 +128,7 @@ def print_conditions(data):
           'avec rafales', wind_gust_kph, 'km/h')
     print()
     print(observation_time)
-    print(observation_location, '(' + station_id + ')')
+    print(observation_location, '(', station_id, ')')
     print(forecast_url)
     return
 
@@ -202,7 +198,7 @@ def print_txt_forecast(data):
     fc = data['forecast']['txt_forecast']['forecastday']
 
     for i in fc:
-        print(i['title'].capitalize() + ':', i['fcttext_metric'])
+        print(i['title'].capitalize(), ':', i['fcttext_metric'])
 
 
 def print_txt_report():
@@ -218,4 +214,4 @@ def print_txt_report():
     return
 
 
-print_report()
+print_txt_report()
